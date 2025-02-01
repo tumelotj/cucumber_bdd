@@ -13,54 +13,44 @@ import org.junit.runner.Request;
 import org.testng.asserts.Assertion;
 import pojo.AddPlace;
 import pojo.Location;
+import resource.TestDataBuild;
+import resource.Utils;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.*;
 
-public class StepDefinitions {
+public class StepDefinitions extends Utils {
     ResponseSpecification responseSpecification;
     RequestSpecification req;
     Response response;
-    @Given("Add Place Payload")
-    public void add_place_payload() {
+    TestDataBuild data = new TestDataBuild();
 
-        AddPlace addPlace = new AddPlace();
-        Location location = new Location();
-        location.setLng(-38.383494);
-        location.setLng(33.427362);
-        addPlace.setLocation(location);
-        addPlace.setAccuracy(50);
-        addPlace.setName("Frontline house");
-        addPlace.setPhone_number("(+91) 983 893 3937");
-        addPlace.setAddress("29, side layout, cohen 09");
-        addPlace.setWebsite("http://google.com");
-        addPlace.setLanguage("French-IN");
-        List<String> types = new ArrayList<String>();
-        types.add("shoe park");
-        types.add("shop");
-        addPlace.setTypes(types);
-        RequestSpecification requestSpecification = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com").setContentType(ContentType.JSON)
-                .setBody(addPlace).build();
-                 req = given().log().all().spec(requestSpecification);
-        responseSpecification = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
+    @Given("Add Place Payload")
+    public void add_place_payload() throws FileNotFoundException {
+                 req = given().log().all().spec(requestSpecBuilder());
+        //responseSpecification = new ResponseSpecBuilder().expectStatusCode(200).build();
     }
+//.body(data.addPlacePayload())
 
     @When("user calls {string} with Post http request")
-    public void user_calls_with_post_http_request(String string) {
-        response = req.when().post("/maps/api/place/add/json")
-                .then().log().all().spec(responseSpecification).extract().response();
+    public void user_calls_with_post_http_request(String AddPlaceAPI) {
+        response = req.when().body(data.addPlacePayload()).post(AddPlaceAPI)
+                .then().log().all().spec(responseSpecBuilder()).extract().response();
     }
     @Then("the API call got success with status code {int}")
-    public void the_api_call_got_success_with_status_code(Integer int1) {
-        Assert.assertEquals(response.getStatusCode(),200);
+    public void the_api_call_got_success_with_status_code(int statusCode) {
+        Assert.assertEquals(response.getStatusCode(),statusCode);
     }
 
-    @And("{string} in response is {string}")
-    public void in_response_is(String string, String string2) {
-        JsonPath js = new JsonPath(response.asString());
-        Assert.assertEquals(string2,js.getString(string));
-
+    @Then("{string} in response is {string}")
+    public void in_response_is(String key, String strValue) {
+        String test = response.asString();
+        JsonPath js = new JsonPath(test);
+        String result = js.getString(key);
+        Assert.assertEquals(strValue,result);
     }
+
 }
