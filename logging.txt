@@ -16,18 +16,18 @@ Body:
         "lng": 33.427362
     },
     "accuracy": 50,
-    "name": "Arn",
+    "name": "Roys",
     "phone_number": "(+91) 983 893 3937",
-    "address": "Free-State",
+    "address": "Team321",
     "types": [
         "shoe park",
         "shop"
     ],
     "website": "http://google.com",
-    "language": "Sotho"
+    "language": "English"
 }
 HTTP/1.1 200 OK
-Date: Tue, 11 Feb 2025 04:59:39 GMT
+Date: Tue, 11 Feb 2025 08:22:21 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: POST
@@ -40,17 +40,17 @@ Content-Type: application/json;charset=UTF-8
 
 {
     "status": "OK",
-    "place_id": "a57d80327dfca25fcdd7e505e5b4c46f",
+    "place_id": "8000bd2a148e9570e298845189fe3d37",
     "scope": "APP",
-    "reference": "12e10cee84b6be995f2c66b96fdc3db612e10cee84b6be995f2c66b96fdc3db6",
-    "id": "12e10cee84b6be995f2c66b96fdc3db6"
+    "reference": "e5b6db5704c088764eb6a57f7ce0e58fe5b6db5704c088764eb6a57f7ce0e58f",
+    "id": "e5b6db5704c088764eb6a57f7ce0e58f"
 }
 Request method:	GET
-Request URI:	https://rahulshettyacademy.com/maps/api/place/get/json?key=qaclick123&place_id=a57d80327dfca25fcdd7e505e5b4c46f
+Request URI:	https://rahulshettyacademy.com/maps/api/place/get/json?key=qaclick123&place_id=8000bd2a148e9570e298845189fe3d37
 Proxy:			<none>
 Request params:	<none>
 Query params:	key=qaclick123
-				place_id=a57d80327dfca25fcdd7e505e5b4c46f
+				place_id=8000bd2a148e9570e298845189fe3d37
 Form params:	<none>
 Path params:	<none>
 Headers:		Accept=*/*
@@ -59,7 +59,7 @@ Cookies:		<none>
 Multiparts:		<none>
 Body:			<none>
 HTTP/1.1 200 OK
-Date: Tue, 11 Feb 2025 04:59:42 GMT
+Date: Tue, 11 Feb 2025 08:22:23 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: POST
@@ -76,12 +76,12 @@ Content-Type: application/json;charset=UTF-8
         "longitude": "33.427362"
     },
     "accuracy": "50",
-    "name": "Arn",
+    "name": "Roys",
     "phone_number": "(+91) 983 893 3937",
-    "address": "Free-State",
+    "address": "Team321",
     "types": "shoe park,shop",
     "website": "http://google.com",
-    "language": "Sotho"
+    "language": "English"
 }
 Request method:	DELETE
 Request URI:	https://rahulshettyacademy.com/maps/api/place/delete/json?key=qaclick123
@@ -96,10 +96,10 @@ Cookies:		<none>
 Multiparts:		<none>
 Body:
 {
-    "place_id": "a57d80327dfca25fcdd7e505e5b4c46f"
+    "place_id": "8000bd2a148e9570e298845189fe3d37"
 }
 HTTP/1.1 200 OK
-Date: Tue, 11 Feb 2025 04:59:46 GMT
+Date: Tue, 11 Feb 2025 08:22:25 GMT
 Server: Apache/2.4.52 (Ubuntu)
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: POST
