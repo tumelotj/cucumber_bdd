@@ -1,26 +1,16 @@
 package stepDefinitions;
 
 import io.cucumber.java.en.*;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.junit.Assert;
-import org.junit.runner.Request;
-import org.testng.asserts.Assertion;
-import pojo.AddPlace;
-import pojo.Location;
-import resource.APIResources;
-import resource.TestDataBuild;
-import resource.Utils;
+import resources.APIResources;
+import resources.TestDataBuild;
+import resources.Utils;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static io.restassured.RestAssured.*;
 
@@ -28,8 +18,8 @@ public class StepDefinitions extends Utils {
     ResponseSpecification responseSpecification;
     RequestSpecification req;
     Response response;
+    static String place_id;
     TestDataBuild data = new TestDataBuild();
-
   /*  @Given("Add Place Payload with {string} {string} {string}")
     public void add_place_payload_with(String string, String string2, String string3) {
         // Write code here that turns the phrase above into concrete actions
@@ -43,12 +33,20 @@ public class StepDefinitions extends Utils {
     }
 //.body(data.addPlacePayload())
 
-    @When("user calls {string} with Post http request")
-    public void user_calls_with_post_http_request(String resource) {
+    @When("user calls {string} with {string} http request")
+    public void user_calls_with_http_request(String resource, String method) {
+
         APIResources resourceAPI = APIResources.valueOf(resource);
         System.out.println(resourceAPI.getResource());
-        response = req.when().post(resourceAPI.getResource())
-                .then().log().all().spec(responseSpecBuilder()).extract().response();
+        if(method.equalsIgnoreCase("POST"))
+            response = req.when().post(resourceAPI.getResource());
+        else if(method.equalsIgnoreCase("GET"))
+            response = req.when().get(resourceAPI.getResource());
+        else if(method.equalsIgnoreCase("DELETE"))
+            response = req.when().delete(resourceAPI.getResource());
+
+
+        // .then().log().all().spec(responseSpecBuilder()).extract().response();
     }
     @Then("the API call got success with status code {int}")
     public void the_api_call_got_success_with_status_code(int statusCode) {
@@ -63,4 +61,19 @@ public class StepDefinitions extends Utils {
         Assert.assertEquals(strValue,result);
     }
 
+
+    @Then("verify place_id created maps to {string} using {string}")
+    public void verify_place_id_created_maps_to_using(String expectedName, String resource) throws IOException {
+
+        place_id = getJsonPath(response,"place_id");
+        req=given().spec(requestSpecBuilder()).queryParam("place_id",place_id);
+        user_calls_with_http_request(resource, "GET");
+        String actualName= getJsonPath(response,"name");
+        Assert.assertEquals(expectedName,actualName);
+
+    }
+    @Given("Delete Place Payload")
+    public void delete_place_payload() throws IOException {
+        req=given().spec(requestSpecBuilder()).body(data.deletePlacePayload(place_id));
+    }
 }
