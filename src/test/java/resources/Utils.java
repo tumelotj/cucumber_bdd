@@ -41,7 +41,6 @@ public class Utils {
         FileInputStream fis = new FileInputStream("C:\\Users\\tumel\\IdeaProjects\\Project2\\APIFramework\\src\\test\\java\\resources\\global.properties");
         prop.load(fis);
         return prop.getProperty(key);
-
     }
 
     public String getJsonPath(Response res, String key)
